@@ -10,7 +10,7 @@ library(TMB)
 library(Rcpp)
 library(starmagarch)
 library(doParallel)
-batch.size <- 1#250
+batch.size <- 250
 #compile("Cpp/STARMAGARCH.cpp")
 #dyn.load(dynlib("Cpp/STARMAGARCH"))
 # --------------------
@@ -45,15 +45,12 @@ run_simest <- function(i=1, parameters, W){
   return(fitSTARMAGARCH(f, data = x, simple=TRUE))
 }
 # test 
-run_simest(1, parameters = parameters, W=W)
+#run_simest(1, parameters = parameters, W=W)
 
-cores <- 1#detectCores()-1
+cores <- detectCores()-1
 cl <- makeCluster(cores)
 clusterEvalQ(cl,expr = {
   library(TMB);library(Rcpp); library(starmagarch)
-  #source("STARMAGARCH/estimation.R")
-  #source("STARMAGARCH/simulation.R")
-  #dyn.load(dynlib("Cpp/STARMAGARCH"))
 })
 
 # -- Batch 1: --
@@ -94,11 +91,7 @@ Rcpp::sourceCpp('Cpp/STARMAGARCH_2d_simulation_5neighbours.cpp')
 cl <- makeCluster(cores)
 clusterEvalQ(cl,expr = {
   library(TMB);library(Rcpp); library(starmagarch)
-  #On Loke: 
   Rcpp::sourceCpp('Cpp/STARMAGARCH_2d_simulation_5neighbours.cpp')
-  #source("STARMAGARCH/estimation.R")
-  #source("STARMAGARCH/simulation.R")
-  #dyn.load(dynlib("Cpp/STARMAGARCH"))
   boot<-function(j=1, par, dim=c(5,5,1000), W){
    x <- simulate_2d(par = par[c(1:3,3,4:5,5,6:8,8,9:10,10)], dim = dim, burnin_time = 1000, burnin_space = 50)
    f <- CreateLikelihood(data = apply(x, 3, c), W=W, parameters = list(
@@ -112,15 +105,13 @@ clusterEvalQ(cl,expr = {
   fitSTARMAGARCH(f, data = x2, simple=TRUE)[1:10]
 }
 })
-# bootstrap 2.0
 run_simest <- function(i=1, par, W, B = 200){
   thetao <- boot(par = par, W = W)
   thetab <- 2*thetao - rowMeans(sapply(1:B, boot, par = thetao, W=W))
   return(c(thetao,thetab))
 }
 
-# test
-run_simest(1, true.par, W, B =2)
+# -- With 50 cores, each batch takes about 3 hrs. --
 
 # -- Batch 1: --
 (t1 <- Sys.time())
@@ -147,6 +138,7 @@ cat("PBBC batch 4 of 4 took:\t ", Sys.time()-t4,"\n")
 save(bres4, file = "Data/bres_5x5x1000_B200_4.RData")
 
 # ------------
+
 
 stopCluster(cl)
 
