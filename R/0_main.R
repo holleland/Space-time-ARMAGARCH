@@ -29,3 +29,5 @@ source("R/6_half-plane-simulation_figure_6.R")
 source("R/7_run_bootstrap_1d.R") # ~ 4 hrs
 source("R/8_run_bootstrap_2d.R") # ~ 18 hrs
 
+# Run SSTA example: 
+source("R/9_SSTA_example.R") # ~ be patient if you want to run this. The code is not optimized.
