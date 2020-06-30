@@ -117,7 +117,9 @@ run.arma.garch.comparison <- function(true.par,burnin = 1000, pdim = c(30,1500),
   # ---------------------------------
   # -- SANDWICH FOR AG-A SITUATION --
   # ---------------------------------
+  
   Infomat3 <- f$he(fit.arma$par)
+  if(FALSE){
   f = MakeADFun(ADreport = TRUE, data=list(x=x, mut=0.0, y =x*0, gam1=0.0),
                 parameters=list(mu = mean(as.vector(x)),  
                                 phi1 = .25, phi2=-.1, theta1=0.1, theta2=0.1, #gam1=0.1, 
@@ -125,7 +127,8 @@ run.arma.garch.comparison <- function(true.par,burnin = 1000, pdim = c(30,1500),
                 DLL = "STARMA1D_CIRCULAR")
   
   ell.gr.A <- matrix(rowSums(apply(f$gr(theta.arma), 1, function(x) c(x%*%t(x)))), ncol = length(theta.arma))
-  res.ga   <- cbind(fit.arma$par, sqrt(diag(solve(Infomat3)%*% ell.gr.A %*% solve(Infomat3))))
+  }
+  res.ga   <- cbind(fit.arma$par, sqrt(diag(solve(Infomat3))))#sqrt(diag(solve(Infomat3)%*% ell.gr.A %*% solve(Infomat3))))
   colnames(res.ga) <- c("ga", "SDga")
   rownames(res.ga) <- par.names[c(1:5,9)]
   
@@ -162,6 +165,7 @@ run.arma.garch.comparison <- function(true.par,burnin = 1000, pdim = c(30,1500),
 # -- RUN EXPERIMENT --
 # --------------------
 cl <- makeCluster(detectCores()-1)
+cl <- makeCluster(20)
 clusterEvalQ(cl,expr = {
     library(TMB) 
     })
@@ -181,8 +185,8 @@ stopCluster(cl)
 
 means<-rowMeans(sim.res[-(1:2),])
 
-A <- matrix(means[1:32],ncol=8,nrow=4, byrow=TRUE)
-B <- matrix(means[33:(length(means))], ncol = 6, nrow=4,byrow=TRUE)
+A <- matrix(means[1:32],ncol=8,nrow=4, byrow=TRUE) # GG and AG 
+B <- matrix(means[33:(length(means))], ncol = 6, nrow=4,byrow=TRUE) # GA and AA
 C <- matrix(NA_real_, ncol = 9, nrow= 8)
 C[1:4,1:8]      <- A
 C[5:8,c(1:5,9)] <- B
@@ -197,6 +201,7 @@ rownames(C) <- c("$\\theta_0$","QMLE-GG", "$\\sqrt{N}$SD-GG", "QMLE-AG",
 A       <- C[4:5,]
 C[4:5,] <- C[6:7,]
 C[6:7,] <- A
+rownames(C)[4:7] <- rownames(C)[c(6:7,4:5)]
 D       <- c(true.par[1],mean(sim.res[1,]),sqrt(200*30)*sd(sim.res[1,]),NA,NA,NA,NA, 
              mean(sim.res[2,]),sqrt(200*30)*sd(sim.res[2,]))
 C[c(2,6),9] <- sqrt(C[c(2,6),6]/(1- 3*(C[c(2,6),7]+C[c(2,6),8])))
@@ -213,6 +218,8 @@ $\\{\\hat\\omega/(1-3\\hat\\alpha-3\\hat\\beta)\\}^{1/2}$."
 print(xtable(C, digits = 3, caption = cap, 
              label = "tab:meansim_GARCHvsARMA"),
       hline.after = c(-1,0,1,3,5,7,9),sanitize.text.function = function(x){x}, 
-      file = "Tables/resG_mean_of_simulations_6k.tex")
+      file = "Tables/resG_mean_of_simulations_6k_4juni.tex")
 
 print(C)
+
+str(sim.res)
