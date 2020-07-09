@@ -13,5 +13,5 @@ k2[k]<-3
 k2
 
 EQ<-  kronecker(A,A)%*% diag(k2) + kronecker(A,B)+ kronecker(B,A)+kronecker(B,B)
-print(max(s<-Mod(eigen(EQ)$values)))
+cat("Chen's condition ", max(s<-Mod(eigen(EQ)$values)), " < 1 is fulfilled.")
 
