@@ -39,7 +39,7 @@ and the original data can be downloaded
     J. D., & Danuser, G. (2015). Functional hierarchy of redundant actin
     assembly factors revealed by fine-grained registration of intrinsic
     image fluctuations. Cell systems, 1(1), 37-50.
-  - Cressie, N., & Wikle, C. K. (2015). Statistics for spatio-temporal
+  - Cressie, N., & Wikle, C. K. (2011). Statistics for spatio-temporal
     data. John Wiley & Sons.
 
 ## Author’s github account
