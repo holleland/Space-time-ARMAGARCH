@@ -18,15 +18,6 @@ Notice the approximate times it takes to execute some of the scripts.
 This is mostly due to not treating the neighbourhood matrices as sparse
 matrices. This will (hopefully) be implemented later.
 
-## Author
-
-**Sondre Hølleland** - [holleland](https://github.com/holleland)
-
-## License
-
-This project is licensed under the GNU GPLv3 License - see
-[LICENSE.md](LICENSE.md) for details.
-
 ## Datasets
 
 The cell data for mDia1 (Data/Chan2\_1L\_imActmap.txt) and edge velocity
@@ -50,3 +41,12 @@ and the original data can be downloaded
     image fluctuations. Cell systems, 1(1), 37-50.
   - Wikle, C. K., Zammit-Mangion, A., & Cressie, N. (2019).
     Spatio-temporal Statistics with R. CRC Press.
+
+## Author
+
+**Sondre Hølleland** - [holleland](https://github.com/holleland)
+
+## License
+
+This project is licensed under the GNU GPLv3 License - see
+[LICENSE.md](LICENSE.md) for details.
