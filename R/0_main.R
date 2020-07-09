@@ -14,7 +14,7 @@ tslutt-tstart
 
 rm(list=ls())
 tstart <- Sys.time()
-source("R/2_edgevelocity.R") # Around 25 mins due to Sandwich estimators
+source("R/2_edgevelocity.R") # Around ~ 25 mins due to Sandwich estimators
 tslutt <- Sys.time()
 tslutt-tstart
 
@@ -31,3 +31,6 @@ source("R/8_run_bootstrap_2d.R") # ~ 18 hrs
 
 # Run SSTA example: 
 source("R/9_SSTA_example.R") # ~ be patient if you want to run this. The code is not optimized.
+
+# Check Chen's condition for moments on X. OK if <1; 
+source("R/10_chens_condition.R")

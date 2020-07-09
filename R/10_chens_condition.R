@@ -13,5 +13,5 @@ k2[k]<-3
 k2
 
 EQ<-  kronecker(A,A)%*% diag(k2) + kronecker(A,B)+ kronecker(B,A)+kronecker(B,B)
-max(s<-Mod(eigen(EQ)$values))
+print(max(s<-Mod(eigen(EQ)$values)))
 
