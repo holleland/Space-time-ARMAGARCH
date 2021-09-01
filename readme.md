@@ -1,12 +1,16 @@
 Space-Time ARMA-GARCH models with applications
 ================
 
-*Contributors: Sondre Hølleland<sup>†</sup>, Hans Arnfinn Karlsen.
-University of Bergen, Norway.*
+*Contributors: Sondre Hølleland<sup>†1,2</sup>, Hans Arnfinn
+Karlsen<sup>2</sup>.*
+
+*<sup>1</sup> Institute of Marine Research, Norway.*
+
+*<sup>2</sup> Department of Mathematics, University of Bergen, Norway.*
 
 *<sup>†</sup> Responsible for the code.*
 
-*Correspondance to: <sondre.holleland@uib.no>*
+*Correspondance to: <sondre.hoelleland@hi.no>*
 
 *The full paper can be found here (link will come).*
 
