@@ -33,6 +33,8 @@ and the original data can be downloaded
 
 ## References
 
+-   Hølleland, S., & Karlsen, H.A. (2021). Space-Time ARMA-GARCH models
+    with applications. Submitted manuscript.  
 -   Hølleland, S., & Karlsen, H. A. (2020). A Stationary Spatio‐Temporal
     GARCH Model. Journal of Time Series Analysis, 41(2), 177-209.
 -   Lee, K., Elliott, H. L., Oak, Y., Zee, C. T., Groisman, A.,
