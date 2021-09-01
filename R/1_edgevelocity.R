@@ -26,7 +26,7 @@ tm <- colMeans(df) # temporal
 means.df <- data.frame(means = c(sm,tm), 
                        x = c(1:nrow(df), (1:ncol(df))*10), 
                        type = c(rep("Space", nrow(df)),rep("Time (sec)", ncol(df))))
-ggplot(means.df, aes(x, means))+geom_point(color = "blue")+
+(meanplot <- ggplot(means.df, aes(x, means))+geom_point(color = "blue")+
   facet_wrap(~type, ncol = 2, scales="free_x", 
              strip.position = "bottom")+
   theme_minimal()+
@@ -38,7 +38,9 @@ ggplot(means.df, aes(x, means))+geom_point(color = "blue")+
         strip.placement = "outside",
         axis.line = element_line(colour = "black"))+
   xlab(NULL)+ylab("Means")+
-  geom_hline(aes(yintercept = 0), color = "red", lwd = .6)
+  geom_hline(aes(yintercept = mean(df.melt[,3])), color = "red", lwd = .8, lty = 1)+
+  geom_hline(aes(yintercept = 0), color = "grey30", lwd = .6, lty =2)
+  )
 ggsave("Figures/9_edge_velocity_space-time-means.pdf", 
        width = 9, height = 4)
 
@@ -46,6 +48,8 @@ ggsave("Figures/9_edge_velocity_space-time-means.pdf",
 df2 <- df
 plotting_df(df2, main = NULL,midpoint = 0,#limits = c(-1,1)*max(abs(c(df2,df3))),#"(d) Detrended Cell 2 mDia1 levels at Layer 1.", 
             path = "Figures/9_edge_velocity_rawdata.pdf")
+rawplot<-plotting_df(df2, main = NULL,midpoint = 0,#limits = c(-1,1)*max(abs(c(df2,df3))),#"(d) Detrended Cell 2 mDia1 levels at Layer 1.", 
+                     path = NULL)
 
 # ----------------------
 # -- Fitting CSTARMA: --
@@ -200,15 +204,22 @@ cat("CSTARMAGARCH complete.\n")
 u <- f$report()$x
 h <- f$report()$sigma
 yhat <- df2-u
-plotting_df(df = u, main = NULL,
-            path = "Figures/10_edge_velocity_CSTARMAGARCH_residuals.pdf")
-plotting_df(df = yhat[,-1], main = NULL,
-            path = "Figures/10_edge_velocity_CSTARMAGARCH_fitted_values.pdf")
-plotting_df(df = sqrt(h), main = NULL,
-            path = "Figures/10_edge_velocity_CSTARMAGARCH_volatility.pdf",
+p1<-plotting_df(df = u[,-1], main = NULL,midpoint = 0, 
+            path = NULL)#"Figures/10_edge_velocity_CSTARMAGARCH_residuals.pdf")
+p2<-plotting_df(df = yhat[,-1], main = NULL, midpoint = 0,
+            path = NULL)#"Figures/10_edge_velocity_CSTARMAGARCH_fitted_values.pdf")
+p3<-plotting_df(df = sqrt(h)[,-1], main = NULL,
+            path = NULL,#"Figures/10_edge_velocity_CSTARMAGARCH_volatility.pdf",
             midpoint = sd(df2),
-            limits =c(range(sqrt(c(h)))))
-
+            limits =c(range(sqrt(c(h[,-1])))))
+p4<-plotting_df(df = (u/sqrt(h))[,-1], main = NULL,
+                path = NULL,#"Figures/10_edge_velocity_CSTARMAGARCH_volatility.pdf",
+                midpoint = 0)
+library(ggpubr)
+ggarrange(p2,p1,p3, p4, ncol = 2,nrow=2,
+          labels = c("A","B","C", "D"))
+ggsave("Figures/10_EDGEVELOCITY_onefig.pdf", 
+       width = 10, height = 8)
 dyn.unload(dynlib("Cpp/STARMAGARCH"))
 
 # ------------
@@ -244,12 +255,12 @@ tu <- cos(seq(0,pi,length.out = 142))
 tv <- sin(seq(0,pi,length.out = 142))
 ddddf<-data.frame(tu=tu,tv=tv, sm=sm)
 
-ggplot(ddddf, aes(tu,tv))+geom_line(aes(col=sm), lwd = 5)+theme_minimal()+
+(arcp<-ggplot(ddddf, aes(tu,tv))+geom_line(aes(col=sm), lwd = 5)+theme_minimal()+
   scale_color_gradient2(low=rgb(78,160,183, max = 255), 
                         mid=rgb(242,237,234,max = 255), high=rgb(229,79,71, max = 255), 
                         midpoint = mean(sm), name = "Spatial Mean",
                         guide = guide_colorbar(barheight = 12))+
-geom_label(aes(x=0,y=.2),label = "Edge velocity", size = 24, fill = rgb(78,160,183, max = 255),
+geom_label(aes(x=0,y=.2),label = "Edge velocity", size = 12, fill = rgb(78,160,183, max = 255),
            color = rgb(242,237,234,max = 255))+
   theme(#plot.background = element_rect(fill=rgb(242,237,234,max = 255), color = rgb(242,237,234,max = 255)),
         panel.grid = element_blank(),
@@ -259,8 +270,27 @@ geom_label(aes(x=0,y=.2),label = "Edge velocity", size = 24, fill = rgb(78,160,1
         legend.text = element_text(size = 14), #color = rgb(41,52,81, max=255), 
                                    #face = "bold"),# rgb(78,160,183, max = 255)),
         legend.title = element_text(size = 14, #color = rgb(41,52,81, max = 255), 
-                                    face = "bold"))
+                                    face = "bold")))
 
 ggsave("Figures/8_edge_velocity_cell_illustration.pdf",
        width = 9, height =4)
+
+ggarrange(
+          ggarrange(arcp, meanplot, ncol = 2, nrow = 1, labels = c("A", "B")),
+          rawplot,
+          ncol = 1, labels = c("","C"))
+
+ggsave("Figures/8_EDGEVELOCITY_means_and_raw.pdf",
+       width = 12, height =8)
+
+
+# Diagnostics: 
+qqnorm(u/sqrt(h))
+qqline(u/sqrt(h), col = 2)
+shapiro.test(c((u/sqrt(h))[,395:399]))
+
 cat("Edge velocity complete.\n")
+
+
+
+

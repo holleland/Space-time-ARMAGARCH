@@ -51,7 +51,7 @@ plotting_df <- function(df, main = NULL, path = NULL, hjust=0.5, midpoint = mean
   (p <- ggplot(df.melt, aes(Var2*10, Var1))+geom_raster(aes(fill=value))+
       scale_fill_gradient2(low="blue", mid = "white", high ="red", limits = limits,
                            midpoint = midpoint,
-                           name = "", guide = guide_colourbar(barheight = 15))+
+                           name = "", guide = guide_colourbar(barheight = 15, ticks.colour = "grey40"))+
       theme_bw()+xlab("Time (sec)")+ylab("Space")+ggtitle(main)+
       theme(axis.text = element_text(size = 12),
             axis.title = element_text(size = 14),
