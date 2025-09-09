@@ -1,7 +1,9 @@
 R/removed/*
+Data/removed/*
 *.Rmd
 *.Rhistory
 *.dll
 *.o
 *.bat
 *.RDataTmp
+.\s1
