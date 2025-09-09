@@ -5,8 +5,8 @@ Contributors: Sondre Hølleland (Norwegian School of Economics), Hans
 Arnfinn Karlsen (University of Bergen).
 
 This repository contains the necessary code for reproducing results from
-the paper **Stationary spatiotemporal ARMAGARCH models and their
-boundary issues**.
+the paper *Stationary spatiotemporal ARMAGARCH models and their boundary
+issues*.
 
 ## Data
 
@@ -19,8 +19,11 @@ hindcast archive’s wind power data set (NORA3-WP) \[Data set\]. NIRD
 RDA.](https://doi.org/10.11582/2021.00068).
 
 The portion of the dataset used in the paper is available in the file
-**data/offshore_windspeeds_NVE_areas.rds**, under the same licence as
-the original data.
+*Data/offshore_windspeeds_NVE_areas.rds*, under the same licence as the
+original data. The file *Data/NVE_20_locations.xlsx* contains
+geographical information about the areas of the 20 NVE-suggested
+potential areas for offshore wind power production in the Norwegian
+Economic Zone.
 
 ## Code
 
