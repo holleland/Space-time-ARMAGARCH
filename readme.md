@@ -1,59 +1,38 @@
-Space-Time ARMA-GARCH models with applications
+Stationary spatiotemporal ARMAGARCH models and their boundary issues
 ================
 
-*Contributors: Sondre Hølleland<sup>†1,2</sup>, Hans Arnfinn
-Karlsen<sup>2</sup>.*
-
-*<sup>1</sup> Institute of Marine Research, Norway.*
-
-*<sup>2</sup> Department of Mathematics, University of Bergen, Norway.*
-
-*<sup>†</sup> Responsible for the code.*
-
-*Correspondance to: <sondre.hoelleland@hi.no>*
-
-*The full paper can be found here (link will come).*
+Contributors: Sondre Hølleland (Norwegian School of Economics), Hans
+Arnfinn Karlsen (University of Bergen).
 
 This repository contains the necessary code for reproducing results from
-the paper *Space-Time ARMA-GARCH models with applications*.
+the paper **Stationary spatiotemporal ARMAGARCH models and their
+boundary issues**.
 
-To redo the analysis, run the separate scripts from *R/0\_main.R*.
-Notice the approximate times it takes to execute some of the scripts.
-This is mostly due to not treating the neighbourhood matrices as sparse
-matrices. This will (hopefully) be implemented later.
+## Data
 
-## Datasets
+Wind speed data from
+[NORA3-WP](https://archive.sigma2.no/dataset/482CC467-9E4F-4377-9E05-CB9822938D07)
+by
 
-The cell data for edge velocity (Data/Chan0\_1L\_imActmap.txt) in a skin
-cell is published by courtesy of [Lee et al
-(2015)](https://doi.org/10.1016/j.cels.2015.07.001). Thanks to Jaewon
-Huh for providing us with the data. The spatially differenced sea
-surface temperature anomalies
-(Data/SSTA\_spatially\_differenced\_without\_land.RData) used by
-[Hølleland and Karlsen(2020)](https://doi.org/10.1111/jtsa.12498) are
-derived from an example dataset for the book by Cressie and Wikle (2011)
-and the original data can be downloaded
-[here](ftp://ftp.wiley.com/public/sci_tech_med/spatio_temporal_data).
+[Solbrekke, I., Sorteberg, A., University of Bergen (2021). Norwegian
+hindcast archive’s wind power data set (NORA3-WP) \[Data set\]. NIRD
+RDA.](https://doi.org/10.11582/2021.00068).
 
-## References
+The portion of the dataset used in the paper is available in the file
+**data/offshore_windspeeds_NVE_areas.rds**, under the same licence as
+the original data.
 
--   Hølleland, S., & Karlsen, H.A. (2021). Space-Time ARMA-GARCH models
-    with applications. Submitted manuscript.  
--   Hølleland, S., & Karlsen, H. A. (2020). A Stationary Spatio‐Temporal
-    GARCH Model. Journal of Time Series Analysis, 41(2), 177-209.
--   Lee, K., Elliott, H. L., Oak, Y., Zee, C. T., Groisman, A.,
-    Tytell, J. D., & Danuser, G. (2015). Functional hierarchy of
-    redundant actin assembly factors revealed by fine-grained
-    registration of intrinsic image fluctuations. Cell systems, 1(1),
-    37-50.
--   Cressie, N., & Wikle, C. K. (2011). Statistics for spatio-temporal
-    data. John Wiley & Sons.
+## Code
 
-## Author’s github account
+In the R folder, you will find the necessary code for reproducing
+figures and tables in the simulations and wind speed forecasting
+application. There is also some additional cpp-files in the Cpp folder
+used with the Template Model Builder (TMB). We also rely on the
+[starmagarch](https://github.com/holleland/starmagarch) package,
+especially for the wind speed application.
 
-**Sondre Hølleland** - [holleland](https://github.com/holleland)
+## Licence
 
-## License
-
-This project is licensed under the GNU GPLv3 License - see
-[LICENSE.md](LICENSE.md) for details.
+This project is licensed under [CC BY 4.0 LEGAL
+CODE](https://creativecommons.org/licenses/by/4.0/legalcode), same as
+the NORA3-WP data.

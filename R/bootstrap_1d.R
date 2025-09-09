@@ -24,7 +24,7 @@ simulate.arma.garch<-function(mu=5,phi1=.35,phi2=-.09,th1=.12,th2=-.05,
   return(x+mu)
 }
 
-arma.garch.bootstrap <- function(lambda, burnin, pdim,ncspace, B=200){
+arma.garch.bootstrap <- function(lambda, burnin, pdim, ncspace, B=200){
   boot.res <- matrix(NA_real_, ncol = length(lambda), nrow=B)
   for(i in 1:B){
     #x <- simulate.arma.garch(mu=lambda[1],phi1=lambda[2],phi2=lambda[3],th1=lambda[4],th2=lambda[5],
