@@ -443,3 +443,30 @@ all(c(fit_c$matcoef$Pvalue,
     fit_naive$matcoef$Pvalue,
     fit_arma$matcoef$Pvalue)<1e-2)
 
+# Per-location RMSE and coverage:
+location_stats <- preds %>%
+  group_by(model, u) %>%
+  mutate(covered = between(y, yhat - 1.96*sigma, yhat + 1.96*sigma)) %>%
+  summarize(
+    RMSE = round(sqrt(mean(x^2)), 3),
+    Coverage = round(100 * mean(covered), 1),
+    .groups = "drop"
+  ) %>%
+  filter(model %in% c("Circular", "ARMA")) %>%
+  mutate(model = ifelse(model == "Circular", "CSTAG", "CSTA"))
+
+# Wide format table for paper:
+location_table <- location_stats %>%
+  pivot_wider(
+    names_from = model,
+    values_from = c(RMSE, Coverage)
+  ) %>%
+  rename(Location = u) %>%
+  select(Location, RMSE_CSTAG, RMSE_CSTA, Coverage_CSTAG, Coverage_CSTA)
+
+# Print as latex table:
+knitr::kable(location_table, format = "latex", booktabs = TRUE,
+             col.names = c("Location", "CSTAG", "CSTA", "CSTAG", "CSTA"),
+             escape = FALSE) %>%
+  kable_styling(latex_options = c("hold_position")) %>%
+  add_header_above(c(" " = 1, "RMSE" = 2, "Coverage (\\%)" = 2))
