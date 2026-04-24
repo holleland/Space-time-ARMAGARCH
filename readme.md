@@ -1,4 +1,4 @@
-Stationary spatiotemporal ARMAGARCH models and their boundary issues
+Forecasting offshore wind speeds with spatio-temporal ARMA-GARCH models
 ================
 
 Contributors: Sondre Hølleland (Norwegian School of Economics), Hans

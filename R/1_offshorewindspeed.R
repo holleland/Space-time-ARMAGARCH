@@ -58,7 +58,7 @@ land %>%
         strip.background = element_rect(fill = "white", color = "transparent"),
         strip.text.y.right = element_text(angle = 90),
         strip.text.x = element_text(angle = 90),
-        text = element_text(size = 11),
+        text = element_text(size = 15),
         plot.caption.position = "plot",
         panel.border = element_blank(),
         legend.title = element_text(angle = 90, vjust =.9, size = 18),
