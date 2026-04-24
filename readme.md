@@ -5,8 +5,8 @@ Contributors: Sondre Hølleland (Norwegian School of Economics), Hans
 Arnfinn Karlsen (University of Bergen).
 
 This repository contains the necessary code for reproducing results from
-the paper *Stationary spatiotemporal ARMAGARCH models and their boundary
-issues*.
+the paper *Forecasting offshore wind speeds with spatio-temporal
+ARMA-GARCH models*.
 
 ## Data
 
